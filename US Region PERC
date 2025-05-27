@@ -1,0 +1,11 @@
+select count(id) as Total,
+format(cast(count(case when state1 in ('CT', 'ME', 'MA', 'NH', 'RI', 'VT') then id END) as decimal(7,2)) *100 / cast(count(id) as decimal(7,2)), '0.##') as 'New England',
+format(cast(count(case when state1 in ('NJ', 'NY', 'PA') then id END) as decimal(7,2)) *100/ cast(count(id) as decimal(7,2)), '0.##') as 'Middle Atlantic',
+format(cast(count(case when state1 in ('IL', 'IN', 'MI', 'OH', 'WI') then id END) as decimal(7,2)) *100/ cast(count(id) as decimal(7,2)), '0.##') as 'East North Central',
+format(cast(count(case when state1 in ('IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD') then id END) as decimal(7,2)) *100/ cast(count(id) as decimal(7,2)), '0.##') as 'West North Central',
+format(cast(count(case when state1 in ('DE', 'DC', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'WV') then id END) as decimal(7,2)) *100/ cast(count(id) as decimal(7,2)), '0.##') as 'South Atlantic',
+format(cast(count(case when state1 in ('AL', 'KY', 'MS', 'TN') then id END) as decimal(7,2)) *100/ cast(count(id) as decimal(7,2)), '0.##') as 'East South Central',
+format(cast(count(case when state1 in ('AR', 'LA', 'OK', 'TX') then id END) as decimal(7,2)) *100/ cast(count(id) as decimal(7,2)), '0.##') as 'West South Central',
+format(cast(count(case when state1 in ('AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY') then id END) as decimal(7,2)) *100/ cast(count(id) as decimal(7,2)), '0.##') as 'Mountain',
+format(cast(count(case when state1 in ('AK', 'CA', 'HI', 'OR', 'WA') then id END) as decimal(7,2)) *100/ cast(count(id) as decimal(7,2)), '0.##') as 'Pacific'
+from ENR where year = '2024' and season = 'Fall'
