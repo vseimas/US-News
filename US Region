@@ -1,0 +1,20 @@
+select count(id),
+case when state1 in ('CT', 'ME', 'MA', 'NH', 'RI', 'VT') then 'New England'
+	when state1 in ('NJ', 'NY', 'PA') then 'Middle Atlantic'
+	when state1 in ('IL', 'IN', 'MI', 'OH', 'WI') then 'East North Central'
+	when state1 in ('IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD') then 'West North Central'
+	when state1 in ('DE', 'DC', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'WV') then 'South Atlantic'
+	when state1 in ('AL', 'KY', 'MS', 'TN') then 'East South Central'
+	when state1 in ('AR', 'LA', 'OK', 'TX') then 'West South Central'
+	when state1 in ('AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY') then 'Mountain'
+	when state1 in ('AK', 'CA', 'HI', 'OR', 'WA') then 'Pacific' ELSE 'International' END as Region
+from ENR where year = '2024' and season = 'Fall'
+group by case when state1 in ('CT', 'ME', 'MA', 'NH', 'RI', 'VT') then 'New England'
+	when state1 in ('NJ', 'NY', 'PA') then 'Middle Atlantic'
+	when state1 in ('IL', 'IN', 'MI', 'OH', 'WI') then 'East North Central'
+	when state1 in ('IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD') then 'West North Central'
+	when state1 in ('DE', 'DC', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'WV') then 'South Atlantic'
+	when state1 in ('AL', 'KY', 'MS', 'TN') then 'East South Central'
+	when state1 in ('AR', 'LA', 'OK', 'TX') then 'West South Central'
+	when state1 in ('AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'UT', 'WY') then 'Mountain'
+	when state1 in ('AK', 'CA', 'HI', 'OR', 'WA') then 'Pacific' ELSE 'International' END
