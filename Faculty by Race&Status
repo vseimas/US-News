@@ -9,13 +9,13 @@ select
                           when 'P' then '5. Native Hawaiian/Pacific Islander'
                           when 'M' then '7. Two or more races'
                           when 'U' then '9. Race and/or ethnicity unknown' END          AS Ethnicity,
-       count(PIDM_KEY) as Total_FAC,
        count(case when FCTG_CODE = 'FTFAC' and gender in ('M') then PIDM_KEY END) as MLE_FT,
        count(case when FCTG_CODE = 'FTFAC' and gender = 'F' then PIDM_KEY END) as FEM_FT,
        count(case when FCTG_CODE = 'FTFAC' and gender  not in ('M', 'F') then PIDM_KEY END) as OTH_FT,
        count(case when FCTG_CODE = 'PTFAC' and gender in ('M') then PIDM_KEY END) as MLE_PT,
        count(case when FCTG_CODE = 'PTFAC' and gender = 'F' then PIDM_KEY END) as FEM_PT,
-       count(case when FCTG_CODE = 'PTFAC' and gender not in ('M', 'F') then PIDM_KEY END) as OTH_PT
+       count(case when FCTG_CODE = 'PTFAC' and gender not in ('M', 'F') then PIDM_KEY END) as OTH_PT,
+       count(PIDM_KEY) as Total_FAC
     from FAC
 where PRIMARY_ACTIVITY in ('I')
 and report = 1
