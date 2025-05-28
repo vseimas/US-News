@@ -1,0 +1,34 @@
+select case FCNT_CODE
+        when '09' then '09'
+        when '10' then '09'
+        when '11' then '11-12'
+        when '12' then '11-12' END as CNT_Length,
+
+                     case
+                         when FSTP_CODE in ('CPRO', 'PROF', 'APRO', 'VPRO') then '1. Professor'
+                         when FSTP_CODE in ('CASO', 'ASSO', 'AASO', 'VASO') then '2. Associate'
+                         when FSTP_CODE in ('CAST', 'ASST', 'AAST', 'VAST') then '3. Assistant'
+ ---                        when FSTP_CODE in ('CINS', 'AINS', 'VINS', 'INST') then 'Instructor'
+  ---                       when FSTP_CODE in ('ALEC', 'CLEC', 'LECT', 'VLEC') then 'Lecturer'
+ ---                        when FSTP_CODE in ('SCHL', 'VSCH') then 'No Rank'
+                         else 'X. Other' END                                                    as Rank,
+    count(PIDM_KEY) as Faculty, round(sum(ANNSALARY), 0) as Total_Cont_Sal
+from FAC
+where report = 1
+and year = '2023'
+and FCTG_CODE = 'FTFAC'
+and PRIMARY_ACTIVITY = 'I'
+and FCNT_CODE in ('09', '10' , '11', '12')
+group by case FCNT_CODE
+        when '09' then '09'
+        when '10' then '09'
+        when '11' then '11-12'
+        when '12' then '11-12' END,                      case
+                         when FSTP_CODE in ('CPRO', 'PROF', 'APRO', 'VPRO') then '1. Professor'
+                         when FSTP_CODE in ('CASO', 'ASSO', 'AASO', 'VASO') then '2. Associate'
+                         when FSTP_CODE in ('CAST', 'ASST', 'AAST', 'VAST') then '3. Assistant'
+ ---                        when FSTP_CODE in ('CINS', 'AINS', 'VINS', 'INST') then 'Instructor'
+  ---                       when FSTP_CODE in ('ALEC', 'CLEC', 'LECT', 'VLEC') then 'Lecturer'
+ ---                        when FSTP_CODE in ('SCHL', 'VSCH') then 'No Rank'
+                         else 'X. Other' END
+order by  CNT_Length, Rank
