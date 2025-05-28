@@ -1,0 +1,24 @@
+select
+                          case ethnic_code
+                          when 'F' then '8. Nonresidents'
+                          when 'H' then '4. Hispanic/Latino'
+                          when 'B' then '3. Black or African American'
+                          when 'W' then '6. White'
+                          when 'N' then '1. American Indian or Alaska Native'
+                          when 'S' then '2. Asian'
+                          when 'P' then '5. Native Hawaiian/Pacific Islander'
+                          when 'M' then '7. Two or more races'
+                          when 'U' then '9. Race and/or ethnicity unknown' END          AS Ethnicity,
+       count(PIDM_KEY) as Total_FAC,
+       count(case when FCTG_CODE = 'FTFAC' and gender in ('M') then PIDM_KEY END) as MLE_FT,
+       count(case when FCTG_CODE = 'FTFAC' and gender = 'F' then PIDM_KEY END) as FEM_FT,
+       count(case when FCTG_CODE = 'FTFAC' and gender  not in ('M', 'F') then PIDM_KEY END) as OTH_FT,
+       count(case when FCTG_CODE = 'PTFAC' and gender in ('M') then PIDM_KEY END) as MLE_PT,
+       count(case when FCTG_CODE = 'PTFAC' and gender = 'F' then PIDM_KEY END) as FEM_PT,
+       count(case when FCTG_CODE = 'PTFAC' and gender not in ('M', 'F') then PIDM_KEY END) as OTH_PT
+    from FAC
+where PRIMARY_ACTIVITY in ('I')
+and report = 1
+and year = '2024'
+group by ETHNIC_CODE
+order by Ethnicity
