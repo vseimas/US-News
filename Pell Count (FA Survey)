@@ -1,0 +1,20 @@
+---- Created a CTE instead of a temp table to access this
+--- AWARD_DET_YEAR table is only available while it is the current aid year
+--- Instead of using that, use the Fall census award table per Margaret
+
+WITH PELLYR AS (
+select pidm_key, id, FT_PT,
+       case when PIDM_KEY in (select pidm_key from archive.dbo.AWARD_DET_YEAR_2425_2024_10_04_CENSUS --- update to Fall census each year
+                                where award_accept_amount>0
+                                and aid_year_key = '2425'
+                                and fund_code_key = 'pell') then 1 ELSE 0 END as 'P2425'
+from enr
+where report=1
+and season = 'Fall' and year = '2024'
+and level='UG'
+and degc_code <> 'NDEG')
+
+select FT_PT, count(PIDM_KEY) as Cohort, sum(P2425) as Pell,
+       format(cast(sum(P2425) as decimal (7,2))/ cast(count(PIDM_KEY) as decimal (7,2)) *100, '0.##') as PERC
+    from PELLYR
+group by FT_PT
