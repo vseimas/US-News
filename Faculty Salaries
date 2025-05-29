@@ -8,10 +8,10 @@ select case FCNT_CODE
                          when FSTP_CODE in ('CPRO', 'PROF', 'APRO', 'VPRO') then '1. Professor'
                          when FSTP_CODE in ('CASO', 'ASSO', 'AASO', 'VASO') then '2. Associate'
                          when FSTP_CODE in ('CAST', 'ASST', 'AAST', 'VAST') then '3. Assistant'
- ---                        when FSTP_CODE in ('CINS', 'AINS', 'VINS', 'INST') then 'Instructor'
-  ---                       when FSTP_CODE in ('ALEC', 'CLEC', 'LECT', 'VLEC') then 'Lecturer'
- ---                        when FSTP_CODE in ('SCHL', 'VSCH') then 'No Rank'
-                         else 'X. Other' END                                                    as Rank,
+                         when FSTP_CODE in ('CINS', 'AINS', 'VINS', 'INST') then '4. Instructor'
+                         when FSTP_CODE in ('ALEC', 'CLEC', 'LECT', 'VLEC') then '6. Lecturer'
+                         when FSTP_CODE in ('SCHL', 'VSCH') then '5. No Rank'
+                         else '7. Other' END                                                    as Rank,
     count(PIDM_KEY) as Faculty, round(sum(ANNSALARY), 0) as Total_Cont_Sal
 from FAC
 where report = 1
@@ -27,8 +27,8 @@ group by case FCNT_CODE
                          when FSTP_CODE in ('CPRO', 'PROF', 'APRO', 'VPRO') then '1. Professor'
                          when FSTP_CODE in ('CASO', 'ASSO', 'AASO', 'VASO') then '2. Associate'
                          when FSTP_CODE in ('CAST', 'ASST', 'AAST', 'VAST') then '3. Assistant'
- ---                        when FSTP_CODE in ('CINS', 'AINS', 'VINS', 'INST') then 'Instructor'
-  ---                       when FSTP_CODE in ('ALEC', 'CLEC', 'LECT', 'VLEC') then 'Lecturer'
- ---                        when FSTP_CODE in ('SCHL', 'VSCH') then 'No Rank'
-                         else 'X. Other' END
+                         when FSTP_CODE in ('CINS', 'AINS', 'VINS', 'INST') then '4. Instructor'
+                         when FSTP_CODE in ('ALEC', 'CLEC', 'LECT', 'VLEC') then '6. Lecturer'
+                         when FSTP_CODE in ('SCHL', 'VSCH') then '5. No Rank'
+                         else '7. Other' END   
 order by  CNT_Length, Rank
