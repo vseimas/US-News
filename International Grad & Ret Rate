@@ -1,0 +1,14 @@
+--- International 6 Year Grad Rate
+select count(id) as INT_cohort, count(case when grad_6yr = '1' then 1 END) as INT_grad6yr,
+       format(cast(count(case when grad_6yr = '1' then 1 END) *100 as decimal (7,2)) / cast(count(id) as decimal (7,2)), '0.##') as INT_gradPerc
+from RETENTION_First_Year
+where season = 'fall' and year = '2018'
+and ethnic_code = 'f'
+
+
+--- International 2nd Year Retention Rate
+select count(id) as INT_cohort, count(case when retrn_2yr = '1' then 1 END) as INT_ret2yr,
+       format(cast(count(case when retrn_2yr = '1' then 1 END) *100 as decimal (7,2)) / cast(count(id) as decimal (7,2)), '0.##') as INT_retPerc
+from RETENTION_First_Year
+where season = 'fall' and year = '2023'
+and ethnic_code = 'f'
